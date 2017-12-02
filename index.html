@@ -4,16 +4,24 @@
     <meta charset="utf-8">
     <title>Patrimoine d'Auvergne</title>
     <link href="css/stylesheet.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <div class="flex-container">
-      <div class="listPane">
+    <div class="flex-containerFull">
+      <div class="flex-container-titleBar">
         <div class="listIcon">
-          <img src="img/ic_list_white_24px.svg" alt="button">
+          <img src="img/ic_list_white_36px.svg" alt="button">
+        </div>
+        <div class="titleBar">
+          <h2 id="title">Patrimoine d'Auvergne</h2>
         </div>
       </div>
-      <div id="map"></div>
+      <div class="flex-containerBottom">
+        <div class="listPane">
+        </div>
+        <div id="map"></div>
+      </div>
     </div>
     <script src="js/mapApi.js" async defer></script>
     <script src="js/app.js" async defer></script>
