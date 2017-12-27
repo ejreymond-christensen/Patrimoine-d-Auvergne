@@ -11,10 +11,10 @@ html, body{
   flex-direction: row;
   height: auto;
   width: 100%;
-  background-color: #272728;
+  background-color: #232324;
   margin: 0;
 }
-.listIcon{
+#listIcon{
 width: 5%;
 margin: auto;
 }
@@ -49,8 +49,9 @@ margin: auto;
   width: auto;
   flex: auto;
 }
-.listPane{
+#listPane{
   height: 100%;
-  background-color: #39393a;
-  width: 200px;
+  background-color: #272728;
+  width: 0px;
+  transition: .5s;
 }

@@ -60,5 +60,15 @@ function setBoundry() {
   map.fitBounds(frame);
 }
 
+//List button
+document.getElementById("listButton").addEventListener("click", function (toggle){
+  var getPane = document.getElementById("listPane").style;
+  if(getPane.width === "0px"){
+    getPane.width = "20%";
+  }
+  else{
+    getPane.width = "0px";
+  }
+});
 
 // Knockout.js functions
