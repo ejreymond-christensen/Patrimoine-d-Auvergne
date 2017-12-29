@@ -75,5 +75,5 @@ td{
   padding-bottom: 5px;
 }
 #listPane::-webkit-scrollbar {
-    width: 0em;
+    width: 0em ; 
 }
