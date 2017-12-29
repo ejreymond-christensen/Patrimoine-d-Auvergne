@@ -54,4 +54,26 @@ margin: auto;
   background-color: #272728;
   width: 0px;
   transition: .5s;
+  overflow-y: auto;
+}
+
+table{
+  padding: 0;
+  margin: 0;
+  border-spacing: 0;
+}
+tr{
+  color: white;
+
+}
+tr:hover{
+  background-color: #3c3c3d;
+}
+td{
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#listPane::-webkit-scrollbar {
+    width: 0em;
 }

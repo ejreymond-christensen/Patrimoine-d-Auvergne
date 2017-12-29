@@ -60,7 +60,7 @@ function setBoundry() {
   map.fitBounds(frame);
 }
 
-//List button
+//List button toggle functionality
 document.getElementById("listButton").addEventListener("click", function (toggle){
   var getPane = document.getElementById("listPane").style;
   if(getPane.width === "0px"){
@@ -72,3 +72,8 @@ document.getElementById("listButton").addEventListener("click", function (toggle
 });
 
 // Knockout.js functions
+
+var listViewModel = ko.observableArray();
+listViewModel.push('locations');
+
+ko.applyBindings (new listViewModel);

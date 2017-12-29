@@ -19,13 +19,20 @@
       </div>
       <div class="flex-containerBottom">
         <div id="listPane">
+          <table>
+            <tbody data-bind="foreach: locations">
+              <tr>
+                <td data-bind="text: title"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div id="map"></div>
       </div>
     </div>
-    <script src="js/mapApi.js" async defer></script>
+    <script src="js/knockout-3.4.2.js"></script>
     <script src="js/app.js" async defer></script>
-    <script type='text/javascript' src='js/knockout-3.4.2.js' async defer></script>
+    <script src="js/mapApi.js" async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBp71ePR9WCTdtrMFvHaoFT4Ln-ohVKnTo&callback=initMap"
     async defer></script>
   </body>
