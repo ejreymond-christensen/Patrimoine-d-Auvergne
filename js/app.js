@@ -28,7 +28,6 @@ var locations = [
   {title: 'Chapelle Sainte-Madeleine', catagory: 'Eglise', city: 'Massiac', location: {lat: 45.2705424, lng: 3.1954172}}
 ];
 
-
 //***VIEWMODEL***
 
 //Non-Knockout.js functions. These just set/create the map and markers on init.
@@ -73,7 +72,19 @@ document.getElementById("listButton").addEventListener("click", function (toggle
 
 // Knockout.js functions
 
-var listViewModel = ko.observableArray();
-listViewModel.push('locations');
+//creates ko viewmodel
+function ViewModel(){
+  var self =this;
+  this.filter = ko.observable();
+  //pushes js array into observable array
+  this.koLocations = ko.observableArray(locations);
+  //search function
+  this.visibleList = ko.computed(function(){
+       return this.koLocations().filter(function(result){
+           if(!self.filter() || result.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1)
+             return result;
+       });
+   },this);
+}
 
-ko.applyBindings (new listViewModel);
+ko.applyBindings(new ViewModel());

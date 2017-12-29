@@ -20,8 +20,9 @@
       <div class="flex-containerBottom">
         <div id="listPane">
           <table>
-            <tbody data-bind="foreach: locations">
+            <tbody data-bind="foreach: visibleList">
               <tr>
+                <input id="filter" type="text" data-bind="textInput: filter"/>
                 <td data-bind="text: title"></td>
               </tr>
             </tbody>
