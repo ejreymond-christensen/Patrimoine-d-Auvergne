@@ -55,18 +55,30 @@ document.getElementById("listButton").addEventListener("click", function (toggle
 // Knockout.js functions
 
 //creates ko viewmodel
-function ViewModel(){
+var ViewModel = function(){
   var self =this;
-  this.filter = ko.observable();
-  //pushes js array into observable array
-  this.koLocations = ko.observableArray(locations);
-  //search function
-  this.visibleList = ko.computed(function(){
-       return this.koLocations().filter(function(result){
-           if(!self.filter() || result.title.toLowerCase().indexOf(self.filter().toLowerCase()) !== -1)
-             return result;
-       });
-   },this);
-}
+  self.filter = ko.observable('');
 
-ko.applyBindings(new ViewModel());
+  //pushes js array into observable array
+  self.koLocations = ko.observableArray(locations);
+
+  //search function
+  //help from https://stackoverflow.com/questions/45422066/set-marker-visible-with-knockout-js-ko-utils-arrayfilter
+   self.filteredItems = ko.computed(function() {
+     var filter = self.filter().toLowerCase();
+     if (!filter) {
+       // shows markers from search
+       ko.utils.arrayForEach(self.koLocations(), function (item) {
+         item.marker.setVisible(true);
+       });
+       return self.koLocations();
+     } else {
+       return ko.utils.arrayFilter(self.koLocations(), function(item) {
+      // shows searched markers
+      var result = (item.title.toLowerCase().search(filter) >= 0)
+      item.marker.setVisible(result);
+      return result;
+    });
+  }
+});
+}

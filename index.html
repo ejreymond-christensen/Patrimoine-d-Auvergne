@@ -20,9 +20,9 @@
       <div class="flex-containerBottom">
         <div id="listPane">
           <table>
-            <tbody data-bind="foreach: visibleList">
+            <tbody data-bind="foreach: filteredItems">
               <tr>
-                <input id="filter" type="text" data-bind="textInput: filter"/>
+                <input id="filter" type="text" placeholder="search" data-bind="textInput: filter"/>
                 <td data-bind="text: title"></td>
               </tr>
             </tbody>
@@ -32,8 +32,8 @@
       </div>
     </div>
     <script src="js/knockout-3.4.2.js"></script>
-    <script src="js/app.js" async defer></script>
     <script src="js/mapApi.js" async defer></script>
+    <script src="js/app.js" async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBp71ePR9WCTdtrMFvHaoFT4Ln-ohVKnTo&callback=initMap"
     async defer></script>
   </body>

@@ -1,5 +1,6 @@
   var map;
   var markers= [];
+
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 45.560, lng: 2.965},
@@ -280,17 +281,25 @@
           position: position,
           title: title,
           city: city,
-          catagory: catagory
+          catagory: catagory,
         })
+        locations[i].marker = marker;
         //console.log(marker.title);
         //console.log(marker.position);
         markers.push(marker);
-        //Creates an onclick event to open infoWindow
+
+        //Creates an onclick event to open infoWindow and bounce marker
         marker.addListener('click', function(){
           populateInfoWindow(this, largeInfoWindow);
+
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setAnimation(null);
+          }
+          markerBounce(this);
         });
       }
     }
+
     //Pulls geocode from markers array and sets frame of the map to include all points
     function setBoundry() {
       var frame = new google.maps.LatLngBounds();
@@ -298,6 +307,15 @@
         frame.extend(markers[i].position);
       }
       map.fitBounds(frame);
+    }
+
+    //Bounce function for on click
+    function markerBounce(marker) {
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
     }
 
     //Infowindow functionality
@@ -311,8 +329,11 @@
         });
       }
     }
+
     //Sets markers on map
     setMarkers(map);
     //Sets the frame
     setBoundry();
-  }
+    //invokes the knockout viewmodel
+    ko.applyBindings(new ViewModel());
+  };
