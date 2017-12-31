@@ -262,8 +262,57 @@
         }
       ]
     });
-    //Sets markers on map (app.js)
+    //Creates infoWindow on init
+    var largeInfoWindow = new google.maps.InfoWindow();
+
+    //Creates markers, pushes them to the Markers array and sets them on the map.
+
+    function setMarkers(map){
+      for (var i = 0; i < locations.length; i++) {
+        var loc = locations[i];
+        var title = loc.title;
+        var city = loc.city;
+        var catagory = loc.catagory;
+        var position = loc.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          animation: google.maps.Animation.DROP,
+          position: position,
+          title: title,
+          city: city,
+          catagory: catagory
+        })
+        //console.log(marker.title);
+        //console.log(marker.position);
+        markers.push(marker);
+        //Creates an onclick event to open infoWindow
+        marker.addListener('click', function(){
+          populateInfoWindow(this, largeInfoWindow);
+        });
+      }
+    }
+    //Pulls geocode from markers array and sets frame of the map to include all points
+    function setBoundry() {
+      var frame = new google.maps.LatLngBounds();
+      for (var i = 0; i < markers.length; i++) {
+        frame.extend(markers[i].position);
+      }
+      map.fitBounds(frame);
+    }
+
+    //Infowindow functionality
+    function populateInfoWindow(markers, infoWindow){
+      if (infoWindow.markers != markers) {
+        infoWindow.markers = markers;
+        infoWindow.setContent('<div>' +'<h2>'+ markers.title +'</h2>'+'</div>'+'<div>' +'Ville: '+ markers.city +", France" + '</div>'+'<div>' +'Type: '+ markers.catagory+ '</div>');
+        infoWindow.open(map, markers);
+        infoWindow.addListener('closeclick', function(){
+          infoWindow.markers = null;
+        });
+      }
+    }
+    //Sets markers on map
     setMarkers(map);
-    //Sets the frame (app.js)
+    //Sets the frame
     setBoundry();
   }

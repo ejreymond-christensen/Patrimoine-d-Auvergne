@@ -28,36 +28,18 @@ var locations = [
   {title: 'Chapelle Sainte-Madeleine', catagory: 'Eglise', city: 'Massiac', location: {lat: 45.2705424, lng: 3.1954172}}
 ];
 
+locations.sort(function(a,b){
+  if (a.title < b.title){
+    return -1;
+  }
+  if (a.title > b.title){
+    return 1;
+  }
+  return 0;
+});
 //***VIEWMODEL***
 
 //Non-Knockout.js functions. These just set/create the map and markers on init.
-
-//Creates markers, pushes them to the Markers array and sets them on the map.
-function setMarkers(map){
-  for (var i = 0; i < locations.length; i++) {
-    var loc = locations[i];
-    var title = loc.title;
-    var position = loc.location;
-    var marker = new google.maps.Marker({
-      map: map,
-      animation: google.maps.Animation.DROP,
-      position: position,
-      title: title,
-    })
-    //console.log(marker.title);
-    //console.log(marker.position);
-    markers.push(marker);
-  }
-}
-
-//Pulls geocode from markers array and sets frame of the map to include all points
-function setBoundry() {
-  var frame = new google.maps.LatLngBounds();
-  for (var i = 0; i < markers.length; i++) {
-    frame.extend(markers[i].position);
-  }
-  map.fitBounds(frame);
-}
 
 //List button toggle functionality
 document.getElementById("listButton").addEventListener("click", function (toggle){
