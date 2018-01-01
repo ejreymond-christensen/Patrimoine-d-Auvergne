@@ -37,6 +37,8 @@ locations.sort(function(a,b){
   }
   return 0;
 });
+
+
 //***VIEWMODEL***
 
 //Non-Knockout.js functions. These just set/create the map and markers on init.
@@ -52,13 +54,13 @@ document.getElementById("listButton").addEventListener("click", function (toggle
   }
 });
 
+
 // Knockout.js functions
 
 //creates ko viewmodel
 var ViewModel = function(){
   var self =this;
   self.filter = ko.observable('');
-
   //pushes js array into observable array
   self.koLocations = ko.observableArray(locations);
 

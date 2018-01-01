@@ -264,6 +264,7 @@
       ]
     });
     //Creates infoWindow on init
+
     var largeInfoWindow = new google.maps.InfoWindow();
 
     //Creates markers, pushes them to the Markers array and sets them on the map.
@@ -282,6 +283,7 @@
           title: title,
           city: city,
           catagory: catagory,
+          unique: loc.unique,
         })
         locations[i].marker = marker;
         //console.log(marker.title);
@@ -329,6 +331,16 @@
         });
       }
     }
+
+    //function pulls knockout title binding from selected div and displays the correct markers infoWindow
+    self.listClick = function(listedClick) {
+      for (var i = 0; i < markers.length; i++) {
+        if (listedClick.title === markers[i].title) {
+          populateInfoWindow(markers[i], largeInfoWindow);
+          markerBounce(markers[i]);
+        }
+      }
+    };
 
     //Sets markers on map
     setMarkers(map);

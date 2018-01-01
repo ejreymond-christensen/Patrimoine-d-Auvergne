@@ -23,7 +23,7 @@
             <tbody data-bind="foreach: filteredItems">
               <tr>
                 <input id="filter" type="text" placeholder="search" data-bind="textInput: filter"/>
-                <td data-bind="text: title"></td>
+                <td data-bind="click: listClick , text: title"></td>
               </tr>
             </tbody>
           </table>
