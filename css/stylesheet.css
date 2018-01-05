@@ -103,3 +103,15 @@ input[type=text] {
 #listPane::-webkit-scrollbar {
     width: 0em;
 }
+
+.photo{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.indvPhoto{
+  width: auto;
+  height: auto;
+  margin: 5px;
+}

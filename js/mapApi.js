@@ -323,12 +323,24 @@
     //Infowindow functionality
     function populateInfoWindow(markers, infoWindow){
       if (infoWindow.markers != markers) {
+        var photosArray = [];
         infoWindow.markers = markers;
-        infoWindow.setContent('<div>' +'<h2>'+ markers.title +'</h2>'+'</div>'+'<div>' +'Ville: '+ markers.city +", France" + '</div>'+'<div>' +'Type: '+ markers.catagory+ '</div>');
+        infoWindow.setContent('<div>' +'<h2>'+ markers.title +'</h2>'+'</div>'+'<div>' +'Ville: '+ markers.city +", France" + '</div>'+'<div>' +'Type: '+ markers.catagory+ '</div>'+ '<div class="photo"></div>');
         infoWindow.open(map, markers);
         infoWindow.addListener('closeclick', function(){
           infoWindow.markers = null;
         });
+        // JQuery - Ajax function for Flickr Api
+        var photosArray = [];
+        var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5d99a2121fc66cc81a902acb85b82e05&tags="+markers.title+"&per_page=10&format=json&nojsoncallback=1"
+        console.log(flickrUrl);
+        $.getJSON(flickrUrl, function(data){
+          $.each(data.photos.photo, function(i,items){
+            var url = 'http://farm' + items.farm + '.static.flickr.com/' + items.server + '/' + items.id + '_' + items.secret + '_m.jpg'
+            var urlTag = '<img class ="indvPhoto" src="'+url+'">'
+            $(".photo").append(urlTag)
+          })
+        })
       }
     }
 
