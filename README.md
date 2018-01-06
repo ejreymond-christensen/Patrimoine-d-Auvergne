@@ -7,3 +7,7 @@ interesting info!
 ## How to use
 
 Simply copy the repo to your desktop and open the index.html file.
+
+## 3rd Party Api
+
+I used flickr's API to ammend 10 photos of the cultural point via the info window.
