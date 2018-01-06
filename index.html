@@ -19,10 +19,10 @@
       </div>
       <div class="flex-containerBottom">
         <div id="listPane">
+          <input id="filter" type="text" placeholder="search" data-bind="textInput: filter"/>
           <table>
             <tbody data-bind="foreach: filteredItems">
               <tr>
-                <input id="filter" type="text" placeholder="search" data-bind="textInput: filter"/>
                 <td data-bind="click: listClick , text: title"></td>
               </tr>
             </tbody>

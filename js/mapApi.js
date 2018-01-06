@@ -284,7 +284,7 @@
           city: city,
           catagory: catagory,
           unique: loc.unique,
-        })
+        });
         locations[i].marker = marker;
         //console.log(marker.title);
         //console.log(marker.position);
@@ -293,7 +293,7 @@
         //Creates an onclick event to open infoWindow and bounce marker
         marker.addListener('click', function(){
           populateInfoWindow(this, largeInfoWindow);
-
+          map.setCenter(this.getPosition());
           for (var i = 0; i < markers.length; i++) {
             markers[i].setAnimation(null);
           }
@@ -317,6 +317,7 @@
         marker.setAnimation(null);
       } else {
         marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){ marker.setAnimation(null); }, 1450);
       }
     }
 
@@ -324,21 +325,22 @@
     function populateInfoWindow(markers, infoWindow){
       if (infoWindow.markers != markers) {
         infoWindow.markers = markers;
-        infoWindow.setContent('<div>' +'<h2>'+ markers.title +'</h2>'+'</div>'+'<div>' +'Ville: '+ markers.city +", France" + '</div>'+'<div>' +'Type: '+ markers.catagory+ '</div>'+ '<div class="photo"></div>');
+        infoWindow.setContent('<div class = "topSection">'+'<div>' +'<h3>'+ markers.title +'</h3>'+'</div>'+'<div>' +'<b>Ville:</b> '+ markers.city +", France" + '</div>'+'<div>' +'<b>Type:</b> '+ markers.catagory+ '</div>'+'<div>'+'<b>Photos:</b>' +'</div>'+'</div>'+'<div class = "botSection">'+ '<div class="photo"></div>'+'</div>');
         infoWindow.open(map, markers);
         infoWindow.addListener('closeclick', function(){
           infoWindow.markers = null;
+          setBoundry();
         });
         // JQuery - Ajax function for Flickr Api
-        var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5d99a2121fc66cc81a902acb85b82e05&tags="+markers.title+"&per_page=10&format=json&nojsoncallback=1"
+        var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=03da237dd6b2bf5116125320aa5b915a&text="+markers.title+"&per_page=15&format=json&nojsoncallback=1";
         console.log(flickrUrl);
         $.getJSON(flickrUrl, function(data){
           $.each(data.photos.photo, function(i,items){
-            var url = 'http://farm' + items.farm + '.static.flickr.com/' + items.server + '/' + items.id + '_' + items.secret + '_m.jpg'
-            var urlTag = '<img class ="indvPhoto" src="'+url+'">'
-            $(".photo").append(urlTag)
-          })
-        })
+            var url = 'http://farm' + items.farm + '.static.flickr.com/' + items.server + '/' + items.id + '_' + items.secret + '_m.jpg';
+            var urlTag = '<img class ="indvPhoto" src="'+url+'">';
+            $(".photo").append(urlTag);
+          });
+        });
       }
     }
 
@@ -347,10 +349,27 @@
       for (var i = 0; i < markers.length; i++) {
         if (listedClick.title === markers[i].title) {
           populateInfoWindow(markers[i], largeInfoWindow);
+          map.setCenter(markers[i].getPosition());
           markerBounce(markers[i]);
         }
       }
     };
+
+    //function toggles the list pane on the left side for searching.
+    document.getElementById("listButton").addEventListener("click", function (toggle){
+      var getPane = document.getElementById("listPane").style;
+      var getMap = document.getElementById("map").style;
+      if(getPane.width === "0px"){
+        getPane.width = "20%";
+        getMap.width = "80%";
+        setBoundry();
+      }
+      else{
+        getPane.width = "0px";
+        getMap.width = "100px";
+        setBoundry();
+      }
+    });
 
     //Sets markers on map
     setMarkers(map);
@@ -358,4 +377,4 @@
     setBoundry();
     //invokes the knockout viewmodel
     ko.applyBindings(new ViewModel());
-  };
+  }
