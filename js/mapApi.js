@@ -325,22 +325,33 @@ function initMap() {
   function populateInfoWindow(markers, infoWindow){
     if (infoWindow.markers != markers) {
       infoWindow.markers = markers;
-      infoWindow.setContent('<div class = "topSection">'+'<div>' +'<h3>'+ markers.title +'</h3>'+'</div>'+'<div>' +'<b>Ville:</b> '+ markers.city +", France" + '</div>'+'<div>' +'<b>Type:</b> '+ markers.catagory+ '</div>'+'<div>'+'<b>Photos:</b>' +'</div>'+'</div>'+'<div class = "botSection">'+ '<div class="photo"></div>'+'</div>');
+      //infoWindow.setContent('<div class = "topSection">'+'<div>'+'<h3>'+markers.title+'</h3>'+'</div>'+'<div>'+'<b>Ville:</b> '+markers.city+", France" + '</div>'+'<div>' +'<b>Type:</b> '+markers.catagory+'</div>'+'<div>'+'<b>Photos:</b>'+'</div>'+'</div>'+'<div class = "botSection">'+'<div class="photo">'+photoList+'</div>'+'</div>');
+      //infoWindow.setContent(photoList);
       infoWindow.open(map, markers);
       infoWindow.addListener('closeclick', function(){
         infoWindow.markers = null;
         setBoundry();
       });
+
       // JQuery - Ajax function for Flickr Api
+      var photoList = ' ';
       var flickrUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=03da237dd6b2bf5116125320aa5b915a&text="+markers.title+"&per_page=15&format=json&nojsoncallback=1";
       console.log(flickrUrl);
-      $.getJSON(flickrUrl, function(data){
+      $.getJSON(flickrUrl, {
+        tagmode: "any",
+        format: "json"
+      })
+        .done(function(data){
         $.each(data.photos.photo, function(i,items){
           var url = 'http://farm' + items.farm + '.static.flickr.com/' + items.server + '/' + items.id + '_' + items.secret + '_m.jpg';
           var urlTag = '<img class ="indvPhoto" src="'+url+'">';
-          $(".photo").append(urlTag);
+          photoList += urlTag;
         });
-      });
+        console.log(photoList);
+        infoWindow.setContent('<div class = "topSection">'+'<div>'+'<h3>'+markers.title+'</h3>'+'</div>'+'<div>'+'<b>Ville:</b> '+markers.city+", France" + '</div>'+'<div>' +'<b>Type:</b> '+markers.catagory+'</div>'+'<div>'+'<b>Photos:</b>'+'</div>'+'</div>'+'<div class = "botSection">'+'<div class="photo">'+photoList+'</div>'+'</div>');
+      }).fail(function (jqXHR, textStatus) {
+            window.alert("Oh no! Flickr could not be reached! Try again later.");
+        });
     }
   }
 
