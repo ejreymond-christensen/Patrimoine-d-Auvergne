@@ -341,7 +341,7 @@ function initMap() {
         tagmode: "any",
         format: "json"
       })
-        .done(function(data){
+      .done(function(data){
         $.each(data.photos.photo, function(i,items){
           var url = 'http://farm' + items.farm + '.static.flickr.com/' + items.server + '/' + items.id + '_' + items.secret + '_m.jpg';
           var urlTag = '<img class ="indvPhoto" src="'+url+'">';
